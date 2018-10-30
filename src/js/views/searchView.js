@@ -3,12 +3,12 @@ import { elements } from './base';
 export const getInput = () => elements.searchInput.value;
 
 export const clearInput = () => {
-    elements.searchInput.value = ' ';
+    elements.searchInput.value = '';
 };
 
 export const clearResults = () => {
-    elements.searchResList.innerHTML = ' ';
-    elements.searchResPages.innerHTML = ' ';
+    elements.searchResList.innerHTML = '';
+    elements.searchResPages.innerHTML = '';
 };
 
 const limitRecipeTitle = (title, limit = 17) => {
@@ -82,3 +82,4 @@ export const renderResults = (recipes, page = 1, resPerPage = 10) => {
     renderButtons(page, recipes.length, resPerPage);
 
 };
+
