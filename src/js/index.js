@@ -1,8 +1,12 @@
+// Models
+import Likes from './models/Likes';
 import Search from './models/Search';
-import Recipe from './models/Recipe';
 import ShoppingList from './models/ShoppingList';
-import * as searchView from './views/searchView';
+import Recipe from './models/Recipe';
+// Views
+import * as likesView from './views/likesView';
 import * as recipeView from './views/recipeView';
+import * as searchView from './views/searchView';
 import * as shoppingListView from './views/shoppingListView';
 import { elements, renderLoader, clearLoader } from './views/base';
 
@@ -13,7 +17,6 @@ import { elements, renderLoader, clearLoader } from './views/base';
  *  - Liked recipes
  */
 const state = {};
-window.state = state;
 
 /**
  * SEARCH Controller
@@ -89,7 +92,10 @@ const controlRecipe = async () => {
 
             // Render recipe
             clearLoader();
-            recipeView.renderRecipe(state.recipe);
+            recipeView.renderRecipe(
+                state.recipe,
+                state.likes.isLiked(id)
+            );
 
         } catch (error) {
             alert('Error processing recipe!');
@@ -101,16 +107,15 @@ const controlRecipe = async () => {
 ['hashchange', 'load'].forEach(event => window.addEventListener(event, controlRecipe));
 
 /**
- * RIST Controller
+ * LIST Controller
  */
-
 const controlList = () => {
     // Create a new list IF there is none
-    if (!state.shoppingList) state.shoppingList = new ShoppingList(); 
+    if (!state.list) state.list = new ShoppingList(); 
 
     //Add each ingredient to the list and UI
     state.recipe.ingredients.forEach(el => {
-        const item = state.shoppingList.addItem(el.count, el.unit, el.ingredient);
+        const item = state.list.addItem(el.count, el.unit, el.ingredient);
         shoppingListView.renderItem(item);
     });
 }
@@ -121,11 +126,70 @@ elements.shopping.addEventListener('click', e => {
 
     // Handle the delete button
     if (e.target.matches('.shopping__delete, .shopping__delete *')) {
+        // Delete from state
+        state.list.deleteItem(id);
 
-        state.shoppingList.deleteItem(id);
-
+        // Delte from UI
         shoppingListView.deleteItem(id);
+
+    // Handle the count update
+    } else if (e.target.matches('.shopping__count-value')) {
+        const val = parseFloat(e.target.value, 10);
+        state.list.updateCount(id, val);
     }
+});
+
+/**
+ * LIKES Controller
+ */
+const controlLike = (ev = 'click') => {
+    if (!state.likes) state.likes = new Likes();
+    const currentID = state.recipe.id;
+
+    // User has NOT yet liked current recipe
+    if (!state.likes.isLiked(currentID)) {
+        // Add like to the state
+        const newLike = state.likes.addLike(
+            currentID, 
+            state.recipe.title,
+            state.recipe.author,
+            state.recipe.img
+        );
+
+        // Toggle the like button
+        likesView.toggleLikeBtn(true);
+
+        // Add like to UI list
+        likesView.renderLike(newLike);
+
+    // User HAS liked current recipe
+    } else {
+        // Remove like from the state
+        state.likes.deleteLike(currentID);
+
+        // Toggle the like button
+        likesView.toggleLikeBtn(false);
+
+        // Remove like from UI
+        likesView.deleteLike(currentID);
+        
+    }
+
+    likesView.toggleLikeMenu(state.likes.getNumLikes());
+};
+
+// Get localStorage data when page load
+window.addEventListener('load', () => {
+    state.likes = new Likes();
+
+    // Restore likes
+    state.likes.readStorage();
+
+    // Toggle like menu button
+    likesView.toggleLikeMenu(state.likes.getNumLikes());
+
+    // Render the existing likes
+    state.likes.likes.forEach(like => likesView.renderLike(like));
 });
 
 // Handling recipe button clicks
@@ -139,10 +203,11 @@ elements.recipe.addEventListener('click', e => {
         state.recipe.updateServings('inc');
         recipeView.updateServingsIngredients(state.recipe);
     } else if (e.target.matches('.recipe__btn--add, .recipe__btn--add *')) {
+        // Add ingredients to shopping list
         controlList();
+    } else if (e.target.matches('.recipe__love, .recipe__love *')) {
+        // Like controller
+        controlLike();
     }
 });
-
-const l = new ShoppingList();
-window.l = new ShoppingList();
 
