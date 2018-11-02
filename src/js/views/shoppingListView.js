@@ -1,6 +1,6 @@
 import {elements } from './base';
 
-export const renderItem= item => {
+export const renderItem = item => {
     const markup = `
     <li class="shopping__item" data-itemid=${item.id}>
         <div class="shopping__count">
@@ -14,11 +14,22 @@ export const renderItem= item => {
             </svg>
         </button>
     </li>
-    `
+    `;
+
     elements.shopping.insertAdjacentHTML('beforeend', markup);
-};
+}; 
+
+export const renderDeleteBtn = () => {
+    const btn = `<button class="btn-tiny btn__delete--all"><i class="fa fa-trash-alt"></i></button>`;
+    elements.deleteAll.insertAdjacentHTML('beforeend', btn);
+}
 
 export const deleteItem = id => {
     const item = document.querySelector(`[data-itemid="${id}"]`);
     item.parentElement.removeChild(item);
 };
+
+export const clearList = () => {
+    elements.shopping.innerHTML = '';
+    elements.deleteAll.innerHTML = '';
+}

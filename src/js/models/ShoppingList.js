@@ -21,6 +21,10 @@ export default class ShoppingList {
         this.items.splice(index, 1);
     }
 
+    clearList(){
+        this.items = [];
+    }
+
     updateCount(id, newCount) {
         this.items.find(el => el.id === id).count = newCount;
     }

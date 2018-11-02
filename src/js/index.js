@@ -118,6 +118,7 @@ const controlList = () => {
         const item = state.list.addItem(el.count, el.unit, el.ingredient);
         shoppingListView.renderItem(item);
     });
+    shoppingListView.renderDeleteBtn();
 }
 
 // Handle delete and update list item events
@@ -136,6 +137,16 @@ elements.shopping.addEventListener('click', e => {
     } else if (e.target.matches('.shopping__count-value')) {
         const val = parseFloat(e.target.value, 10);
         state.list.updateCount(id, val);
+    } 
+});
+
+// Handle delete list button
+elements.deleteAll.addEventListener('click', e => {
+    if (e.target.matches('.delete__all *')) {
+        if (state.list) {
+            state.list.clearList();
+            shoppingListView.clearList();
+        }
     }
 });
 

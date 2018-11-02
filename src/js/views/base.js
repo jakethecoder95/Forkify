@@ -1,4 +1,5 @@
 export const elements = {
+    deleteAll: document.querySelector('.delete__all'),
     likesMenu: document.querySelector('.likes__field'),
     likesLink: document.querySelector('.likes__list'),
     searchForm: document.querySelector('.search'),

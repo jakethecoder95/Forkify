@@ -121,6 +121,23 @@ body {
   .btn-tiny:not(:last-child) {
     margin-right: .3rem; }
 
+.shopping:hover .btn__delete--all {
+  visibility: visible; }
+.btn__delete--all {
+  visibility: hidden;
+  margin: 20px;
+  float: right;
+  transition: all .2s; } 
+.btn__delete--all:active {
+  transform: translateY(-2px); }
+  .btn__delete--all i {
+    color: #F48982;
+    font-size: 18px;
+    background: none;
+    opacity: 0.5; }
+  .btn__delete--all i:hover {
+    opacity: 0.9;
+    font-size: 20px; } 
 .heading-2 {
   font-size: 1.8rem;
   font-weight: 600;
@@ -129,7 +146,6 @@ body {
   margin-bottom: 2.5rem;
   text-align: center;
   transform: skewY(-3deg); }
-
 .copyright {
   color: #968B87;
   font-size: 1.2rem;
@@ -490,3 +506,4 @@ body {
   .shopping__item:hover .shopping__delete {
     opacity: 1;
     visibility: visible; }
+
