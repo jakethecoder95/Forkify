@@ -8,7 +8,7 @@ import * as likesView from './views/likesView';
 import * as recipeView from './views/recipeView';
 import * as searchView from './views/searchView';
 import * as shoppingListView from './views/shoppingListView';
-import { elements, renderLoader, clearLoader } from './views/base';
+import { elements, renderLoader, clearLoader, getManualListValues } from './views/base';
 
 /** Global state of the app
  *  - Search object
@@ -17,6 +17,8 @@ import { elements, renderLoader, clearLoader } from './views/base';
  *  - Liked recipes
  */
 const state = {};
+window.state = state;
+
 
 /**
  * SEARCH Controller
@@ -121,6 +123,18 @@ const controlList = () => {
     shoppingListView.renderDeleteBtn();
 }
 
+const controlListManual = () => {
+    // Create a new list IF there is none
+    if (!state.list) state.list = new ShoppingList();
+
+    // Get the values
+    const values = getManualListValues()
+    const item = state.list.addItem(values.count, values.unit, values.ingredient);
+
+    // Add each ingredient
+    shoppingListView.renderItem(item);
+}
+
 // Handle delete and update list item events
 elements.shopping.addEventListener('click', e => {
     const id = e.target.closest('.shopping__item').dataset.itemid;
@@ -140,15 +154,39 @@ elements.shopping.addEventListener('click', e => {
     } 
 });
 
-// Handle delete list button
-elements.deleteAll.addEventListener('click', e => {
-    if (e.target.matches('.delete__all *')) {
+// Handle clear list, add item, submit item buttons
+elements.addDelete.addEventListener('click', e => {
+    // Clear list
+    if (e.target.matches('.btn__delete--all, .btn__delete--all *')) {
         if (state.list) {
             state.list.clearList();
             shoppingListView.clearList();
+            state.list.persistData();
         }
+    // Render input fields
+    } else if (e.target.matches('.btn__add--item')) {
+        shoppingListView.renderInputs();
+    } else if (e.target.matches('#cancel')) {
+        shoppingListView.removeInputs();
     }
 });
+
+// Manual list input form
+elements.inputShopItem.addEventListener('submit', e => {
+    e.preventDefault();
+
+    // Add list item
+    controlListManual();
+
+    // Add the Clear all button
+    shoppingListView.renderDeleteBtn();
+    
+    // Remove input fields
+    shoppingListView.removeInputs();
+    
+});
+
+
 
 /**
  * LIKES Controller

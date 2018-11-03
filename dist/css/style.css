@@ -121,23 +121,61 @@ body {
   .btn-tiny:not(:last-child) {
     margin-right: .3rem; }
 
-.shopping:hover .btn__delete--all {
-  visibility: visible; }
-.btn__delete--all {
+.shopping:hover .add__delete { visibility: visible; }
+.add__delete {
   visibility: hidden;
-  margin: 20px;
-  float: right;
-  transition: all .2s; } 
-.btn__delete--all:active {
-  transform: translateY(-2px); }
-  .btn__delete--all i {
-    color: #F48982;
-    font-size: 18px;
-    background: none;
-    opacity: 0.5; }
-  .btn__delete--all i:hover {
-    opacity: 0.9;
-    font-size: 20px; } 
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: row;
+  transition: all .2s; }
+  .btn__add--item {
+    width: 150px;
+    height: 30px;
+    margin-right: 20px;
+    font-weight: bold;
+    color: rgba(101, 90, 86, 0.4);
+    border: solid 2px rgba(101, 90, 86, 0.2);
+    border-radius: 8px; }
+  .btn__add--item:hover {
+    color: rgba(244, 137, 130, .6);
+    border-color: rgba(244, 137, 130, .6); }
+  .btn__delete--all:active {
+    transform: translateY(-2px); }
+    .btn__delete--all i {
+      color: #F48982;
+      font-size: 18px;
+      background: none;
+      opacity: 0.5; }
+    .btn__delete--all i:hover {
+      opacity: 0.9;
+      font-size: 20px; }
+    .input__list--item {
+      width: 90%;
+      margin: 5px;
+      padding-top: 20px; } 
+    .item__input:focus { outline: none }
+      .item__input {
+        width: 40%;
+        margin: 5px 5%; }
+      .item__input-description {
+        width: 80%; 
+        height: 80px }
+      textarea { resize: none; }
+      .input__list--item i { color: red; }
+      #last { vertical-align: 70px; }
+      #dummy { visibility: hidden; }
+      #cancel { 
+        cursor: pointer;
+        color: red;
+        float: right;
+        margin-right: 30px; }
+      #cancel:hover { text-decoration: underline; }
+      .btn__add { margin-left: 15px; }
+      .fa-check { color: rgb(5, 211, 211) !important; }
+      
 .heading-2 {
   font-size: 1.8rem;
   font-weight: 600;
@@ -203,6 +241,8 @@ body {
       outline: none; }
     .search__field::placeholder {
       color: #DAD0CC; }
+
+
 
 .likes {
   position: relative;

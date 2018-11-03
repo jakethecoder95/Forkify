@@ -1,5 +1,8 @@
 export const elements = {
-    deleteAll: document.querySelector('.delete__all'),
+    addDelete: document.querySelector('.add__delete'),
+    btnAddItem: document.querySelector('.btn__add--item'),
+    btnDeleteAll: document.querySelector('.btn__delete--all'),
+    inputShopItem: document.querySelector('.input__list--item'),
     likesMenu: document.querySelector('.likes__field'),
     likesLink: document.querySelector('.likes__list'),
     searchForm: document.querySelector('.search'),
@@ -30,3 +33,12 @@ export const clearLoader = () => {
     const loader = document.querySelector(`.${elementStrings.loader}`);
     if (loader) loader.parentElement.removeChild(loader);
 }
+
+export const getManualListValues = () => {
+    return {
+        count: document.querySelector('.quantity').value,
+        unit: document.querySelector('.measure').value,
+        ingredient: document.querySelector('.item__input-description').value
+    }
+};
+

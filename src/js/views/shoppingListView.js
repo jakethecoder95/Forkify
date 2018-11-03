@@ -1,7 +1,7 @@
-import {elements } from './base';
+import { elements } from './base';
 
 export const renderItem = item => {
-    const markup = `
+    const itemMarkup = `
     <li class="shopping__item" data-itemid=${item.id}>
         <div class="shopping__count">
             <input type="number" value="${item.count}" step="${item.count}" class="shopping__count-value">
@@ -16,12 +16,35 @@ export const renderItem = item => {
     </li>
     `;
 
-    elements.shopping.insertAdjacentHTML('beforeend', markup);
+    elements.shopping.insertAdjacentHTML('beforeend', itemMarkup);
 }; 
 
 export const renderDeleteBtn = () => {
-    const btn = `<button class="btn-tiny btn__delete--all"><i class="fa fa-trash-alt"></i></button>`;
-    elements.deleteAll.insertAdjacentHTML('beforeend', btn);
+    const clearAllBtn = document.querySelector('.btn__delete--all');
+    if (!clearAllBtn) {
+        const btnMarkup = `
+        <button class="btn-tiny btn__delete--all">
+            <i class="fa fa-trash-alt"></i>
+        </button>`;
+
+        elements.btnAddItem.insertAdjacentHTML('afterend', btnMarkup);
+    }
+};
+
+export const renderInputs = () => {
+    const inputsMarkup = `
+        <i>*</i><input required class="item__input quantity" type="number" placeholder="Quantity">
+        <i id="dummy"><br/>*</i><input class="item__input measure" type="text" placeholder="cups, tbsp?">
+        <i id="last"><br/>*</i><textarea required class="item__input item__input-description" type="text" placeholder="ingredient..."></textarea>
+        <button class="btn-tiny btn__add"><i class="fa fa-check"></i></button>
+        <a id="cancel">cancel</a>
+    `;
+
+    !elements.inputShopItem.firstElementChild ? elements.inputShopItem.insertAdjacentHTML('afterbegin', inputsMarkup) : null;
+}
+
+export const removeInputs = () => {
+    elements.inputShopItem.innerHTML = '';
 }
 
 export const deleteItem = id => {
@@ -31,5 +54,6 @@ export const deleteItem = id => {
 
 export const clearList = () => {
     elements.shopping.innerHTML = '';
-    elements.deleteAll.innerHTML = '';
+    const btn = document.querySelector('.btn__delete--all');
+    btn.parentElement.removeChild(btn);
 }
