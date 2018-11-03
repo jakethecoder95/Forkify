@@ -17,7 +17,6 @@ import { elements, renderLoader, clearLoader, getManualListValues } from './view
  *  - Liked recipes
  */
 const state = {};
-window.state = state;
 
 
 /**
@@ -102,6 +101,7 @@ const controlRecipe = async () => {
         } catch (error) {
             alert('Error processing recipe!');
             console.log(error);
+            clearLoader();
         }
     }
 }
@@ -134,6 +134,20 @@ const controlListManual = () => {
     // Add each ingredient
     shoppingListView.renderItem(item);
 }
+
+// Retrieve local storage data and display it to the UI
+window.addEventListener('load', () => {
+    state.list = new ShoppingList();
+
+    // Update retrieve stored data
+    state.list.getStoredData();
+
+    // Render lists
+    state.list.items.forEach(el => shoppingListView.renderItem(el));
+    
+    // Render delete button if theres a list
+    if (state.list.items.length) shoppingListView.renderDeleteBtn();
+});
 
 // Handle delete and update list item events
 elements.shopping.addEventListener('click', e => {
@@ -185,7 +199,6 @@ elements.inputShopItem.addEventListener('submit', e => {
     shoppingListView.removeInputs();
     
 });
-
 
 
 /**

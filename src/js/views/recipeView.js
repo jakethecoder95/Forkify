@@ -14,14 +14,26 @@ const formatCount = count => {
 
         if (int === 0) {
             const fr = new Fraction(newCount);
-            return `${fr.numerator}/${fr.denominator}`;
+            const parsedFr = parseFrac(fr.numerator, fr.denominator);
+            return (parsedFr);
         } else {
             const fr = new Fraction(newCount - int);
-            return `${int} ${fr.numerator}/${fr.denominator}`;
+            return `${int} ${parseFrac(fr.numerator, fr.denominator)}`;
         }
     }
     return '?';
 };
+
+const parseFrac = (nume, den) => {
+    let numeStr = nume.toString();
+
+    console.log(`length: ${numeStr.length}  index1: ${numeStr[0]}`)
+    if (numeStr.length > 3 && numeStr[0] === '3') {
+        return `1/3`;
+    } else if (numeStr.length > 3 && numeStr[0] === '6'){
+        return `2/3`;
+    } else return `${nume}/${den}`;
+}
 
 const createIngredient = ingredient => `
     <li class="recipe__item">

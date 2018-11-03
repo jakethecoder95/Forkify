@@ -34,6 +34,10 @@ export default class ShoppingList {
     }
 
     persistData() {
-        localStorage.setItem('ShopItem', JSON.stringify(this.items));
+        localStorage.setItem('ShopItems', JSON.stringify(this.items));
+    }
+
+    getStoredData() {
+        if (localStorage.ShopItems) this.items = JSON.parse(localStorage.getItem('ShopItems'));
     }
 }
