@@ -27,7 +27,6 @@ const formatCount = count => {
 const parseFrac = (nume, den) => {
     let numeStr = nume.toString();
 
-    console.log(`length: ${numeStr.length}  index1: ${numeStr[0]}`)
     if (numeStr.length > 3 && numeStr[0] === '3') {
         return `1/3`;
     } else if (numeStr.length > 3 && numeStr[0] === '6'){

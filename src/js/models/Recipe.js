@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { key, proxy } from '../config';
+import Error from '../errors';
 
 export default class Recipe {
     constructor(id) {
@@ -15,8 +16,9 @@ export default class Recipe {
             this.sourch_url = res.data.recipe.source_url;
             this.ingredients = res.data.recipe.ingredients;
         } catch (error) {
+            const error = new Error();
+            error.renderError('recipe', 'May have reached key request limit');
             console.log(error);
-            alert('Something went Wrong :(')
         }
 
     }
@@ -87,6 +89,7 @@ export default class Recipe {
     }
 
     updateServings (type) {
+
         // Servings
         const newServings = type === 'dec' ? this.servings - 1 : this.servings + 1;
 

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { key, proxy } from '../config';
+import Error from '../errors';
 
 export default class Search {
     constructor(query) {
@@ -11,10 +12,11 @@ export default class Search {
             const res = await axios(`${proxy}https://www.food2fork.com/api/search?key=${key}&q=${this.query}`);
             this.result = res.data.recipes;
             if (res.data.error) {
-                alert(`Error in processing your search: ${res.data.error}`);
+                const error = new Error();
+                error.renderError('search', 'key request limit');
             }
         } catch (error) {
-            alert(error);
+            console.log(error);
         }
     }
 }

@@ -2,6 +2,7 @@ export const elements = {
     addDelete: document.querySelector('.add__delete'),
     btnAddItem: document.querySelector('.btn__add--item'),
     btnDeleteAll: document.querySelector('.btn__delete--all'),
+    errorWindow: document.querySelector('.error__div'),
     inputShopItem: document.querySelector('.input__list--item'),
     likesMenu: document.querySelector('.likes__field'),
     likesLink: document.querySelector('.likes__list'),

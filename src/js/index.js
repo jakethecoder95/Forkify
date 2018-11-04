@@ -1,3 +1,4 @@
+import Error from './errors';
 // Models
 import Likes from './models/Likes';
 import Search from './models/Search';
@@ -44,8 +45,10 @@ const controlSearch = async () => {
             searchView.renderResults(state.search.result);
 
         } catch (err) {
-            clearLoader();
+            state.error = new Error();
+            state.error.renderError('search');
             console.log(err);
+            clearLoader();
         }
     } 
 }
@@ -68,6 +71,10 @@ elements.searchResPages.addEventListener('click', e => {
  * RECIPE Controller
  */
 const controlRecipe = async () => {
+
+    // Remove ERROR message if it exists
+    state.error ? state.error.removeError() : null 
+
     // Get ID from url
     const id = window.location.hash.replace('#', '');
 
@@ -98,9 +105,10 @@ const controlRecipe = async () => {
                 state.likes.isLiked(id)
             );
 
-        } catch (error) {
-            alert('Error processing recipe!');
-            console.log(error);
+        } catch (err) {
+            state.error = new Error();
+            state.error.renderError('recipe');
+            console.log(err);
             clearLoader();
         }
     }
@@ -271,5 +279,10 @@ elements.recipe.addEventListener('click', e => {
         // Like controller
         controlLike();
     }
+});
+
+// Handel delete error window 
+elements.errorWindow.addEventListener('click', e => {
+    e.target.matches('.fa-times') ? state.error.removeError() : null 
 });
 
