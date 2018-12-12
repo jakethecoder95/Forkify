@@ -11,6 +11,7 @@ import * as searchView from './views/searchView';
 import * as shoppingListView from './views/shoppingListView';
 import { elements, renderLoader, clearLoader, getManualListValues } from './views/base';
 
+
 /** Global state of the app
  *  - Search object
  *  - Current recipe object
@@ -113,7 +114,6 @@ const controlRecipe = async () => {
         }
     }
 }
-
 ['hashchange', 'load'].forEach(event => window.addEventListener(event, controlRecipe));
 
 /**

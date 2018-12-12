@@ -8,7 +8,7 @@ export default class Error {
         if (!des) {
             markup = `
                 <div class="error">
-                    <p>ERROR: Something went wrong processing that ${type}</p>
+                    <p>ERROR: Something went wrong processing that ${type}.</p>
                     <i class='fa fa-times'></i>
                 </div>
             `;

@@ -42,4 +42,3 @@ export const getManualListValues = () => {
         ingredient: document.querySelector('.item__input-description').value
     }
 };
-
